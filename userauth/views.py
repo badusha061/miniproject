@@ -1,5 +1,5 @@
 from django.shortcuts import render ,redirect
-
+from .forms import RegisterForm
 # Create your views here.
 
 
@@ -27,4 +27,14 @@ def user_login(request):
     return render(request,'login.html')
 
 def user_register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        print(form.errors)
+        if form.is_valid():
+            print('the if case is working')
+            print('username is the',form.cleaned_data['username'])
+
+        else:
+            form = RegisterForm()
+            print('the else case is working')
     return render(request,'register.html')
