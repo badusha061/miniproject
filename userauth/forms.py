@@ -1,7 +1,11 @@
 from django import forms       
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+class RegisterForm(UserCreationForm):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
+    class Meta:
+        model = User
+        fields = ['username','email','password']
 
-class RegisterForm(forms.Form):
-    username = forms.CharField(label='username',max_length=50)
-    email = forms.CharField(label='email',max_length=100)
-    password = forms.IntegerField(label='password')
-    conform_password = forms.IntegerField(label='conform_password')
+    
