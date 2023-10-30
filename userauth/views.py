@@ -25,16 +25,20 @@ def palakkad(request):
 
 def user_login(request):
     return render(request,'login.html')
-
 def user_register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
-        print(form.errors)
         if form.is_valid():
+            form.save() 
             print('the if case is working')
-            print('username is the',form.cleaned_data['username'])
-
+            print('username is the', form.cleaned_data['username'])
         else:
-            form = RegisterForm()
             print('the else case is working')
-    return render(request,'register.html')
+            print(form.errors)
+    else:
+        form = RegisterForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'register.html', context)
