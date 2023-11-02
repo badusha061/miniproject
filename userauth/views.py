@@ -1,5 +1,7 @@
 from django.shortcuts import render ,redirect
 from .forms import RegisterForm
+from django.contrib.auth.models import User
+from django.contrib import messages
 # Create your views here.
 
 
@@ -25,15 +27,18 @@ def palakkad(request):
 
 def user_login(request):
     return render(request,'login.html')
+
 def user_register(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        form = RegisterForm(request.POST)  
         if form.is_valid():
+            email = form.cleaned_data['email']
+            if User.objects.filter(email = email).exists():
+                messages.error(request, 'The email is already taken please take another eamil')
+                return redirect('userauth:user_register')
+            print(email)
             form.save() 
-            print('the if case is working')
-            print('username is the', form.cleaned_data['username'])
         else:
-            print('the else case is working')
             print(form.errors)
     else:
         form = RegisterForm()
