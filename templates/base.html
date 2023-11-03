@@ -74,6 +74,38 @@
             </div>
         </header>
 
+
+        {% if messages %}
+        <div>
+        {% for message in messages %}
+        <div>
+            {{message}}
+        </div>
+        {% endfor %}
+        </div>
+        {% endif %}
+
+
+        
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Error:</strong> Please correct the following issues:
+        <ul>
+            {% for field, errors in form.errors.items %}
+                <li>Error:
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+
+        
     {% block content %}
 
     {% endblock content %}
