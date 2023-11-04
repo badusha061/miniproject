@@ -2,6 +2,7 @@ from django.shortcuts import render ,redirect
 from .forms import RegisterForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
 # Create your views here.
 
 
@@ -26,7 +27,20 @@ def palakkad(request):
 
 
 def user_login(request):
-    return render(request,'login.html')
+    form = AuthenticationForm()
+    if request.method == 'POST':
+        form = AuthenticationForm(request.POST)
+        if form.is_valid():
+            print('the if case is working')
+            pass
+        else:
+            print('the else case is working')
+            messages.error(request, 'please enter the valid')
+            return redirect('userauth:user_login')
+    context = {
+        "form":form
+    }
+    return render(request,'login.html',context)
 
 def user_register(request):
     if request.method == 'POST':
