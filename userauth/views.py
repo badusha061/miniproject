@@ -56,7 +56,7 @@ def user_register(request):
             print(form.errors)
     else:
         form = RegisterForm()
-
+        print('this  calling')
     context = {
         'form': form
     }
